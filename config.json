@@ -1,5 +1,5 @@
 {
-    "name": "sleep_edf20_smote_exp1",
+    "name": "sleep_edf78_smote_exp1",
     "n_gpu": 4,
 
     "arch": {
