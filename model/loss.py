@@ -6,7 +6,5 @@ import torch.nn as nn
 #     cr = nn.CrossEntropyLoss(weight=torch.tensor(classes_weights).to(device))
 #     return cr(output, target)
 
-# Standard CrossEntropyLoss (No Class Weights)
 def CrossEntropyLoss(output, target, device=None):
-    cr = nn.CrossEntropyLoss()  # Standard CrossEntropyLoss without weights
-    return cr(output, target)
+    cr = nn.CrossEntropyLoss() 
