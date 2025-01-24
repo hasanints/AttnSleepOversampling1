@@ -1,5 +1,5 @@
 {
-    "name": "sleep_edf20_apply_adasyn_1_2_exp1",
+    "name": "sleep_edf78_apply_adasyn_1_2_exp1",
     "n_gpu": 4,
 
     "arch": {
@@ -10,7 +10,7 @@
     "data_loader": {
         "args":{
             "batch_size": 128,
-            "num_folds": 20
+            "num_folds": 10
         }
     },
     "optimizer": {
