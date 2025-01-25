@@ -8,3 +8,4 @@ import torch.nn as nn
 
 def CrossEntropyLoss(output, target, device=None):
     cr = nn.CrossEntropyLoss() 
+    return cr(output, target)
