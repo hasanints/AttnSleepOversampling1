@@ -55,9 +55,17 @@ def data_generator_np(training_files, subject_files, batch_size):
     X_train = np.load(training_files[0])["x"]
     y_train = np.load(training_files[0])["y"]
 
-    for np_file in training_files[1:]:
-        X_train = np.vstack((X_train, np.load(np_file)["x"]))
-        y_train = np.append(y_train, np.load(np_file)["y"])
+    # for np_file in training_files[1:]:
+    #     X_train = np.vstack((X_train, np.load(np_file)["x"]))
+    #     y_train = np.append(y_train, np.load(np_file)["y"])
+
+    for np_file in training_files:
+        try:
+            data = np.load(np_file)
+            X_train = np.vstack((X_train, data["x"]))
+            y_train = np.append(y_train, data["y"])
+        except Exception as e:
+            print(f"Error processing file {np_file}: {e}")
 
     X_resampled, y_resampled = apply_adasyn_1_2(X_train, y_train)
 
