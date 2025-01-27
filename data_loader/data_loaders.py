@@ -31,22 +31,48 @@ class LoadDataset_from_numpy(Dataset):
 from imblearn.over_sampling import ADASYN
 from collections import Counter
 
-def apply_adasyn_1_2(X_train, y_train):
-    class_counts = Counter(y_train)
-    print(f"Distribusi kelas sebelum ADASYN: {class_counts}")
+# def apply_adasyn_1_2(X_train, y_train):
+#     class_counts = Counter(y_train)
+#     print(f"Distribusi kelas sebelum ADASYN: {class_counts}")
     
+#     class_2_count = class_counts[2]
+#     sampling_strategy = {3: class_2_count // 2} 
+
+#     adasyn = ADASYN(sampling_strategy=sampling_strategy, random_state=42)
+
+#     X_train_reshaped = X_train.reshape(X_train.shape[0], -1)
+ 
+#     X_resampled, y_resampled = adasyn.fit_resample(X_train_reshaped, y_train)
+ 
+#     X_resampled = X_resampled.reshape(-1, X_train.shape[1], X_train.shape[2])
+
+#     print(f"Distribusi kelas setelah ADASYN: {Counter(y_resampled)}")
+    
+#     return X_resampled, y_resampled
+
+def apply_smote_1_2(X_train, y_train):
+    # Melihat distribusi kelas sebelum SMOTE
+    class_counts = Counter(y_train)
+    print(f"Distribusi kelas sebelum SMOTE: {class_counts}")
+    
+    # Menentukan kelas yang ingin dioversample (kelas 1) dengan perbandingan 1:2 terhadap kelas 2
     class_2_count = class_counts[2]
-    sampling_strategy = {3: class_2_count // 2} 
-
-    adasyn = ADASYN(sampling_strategy=sampling_strategy, random_state=42)
-
+    sampling_strategy = {1: class_2_count // 2}  # Kelas 1 akan dioversample hingga setengah jumlah kelas 2
+    
+    # Inisialisasi SMOTE
+    smote = SMOTE(sampling_strategy=sampling_strategy, random_state=42)  # oversample kelas 1 menjadi setengah kelas 2
+    
+    # Ubah data menjadi 2D untuk kompatibilitas dengan SMOTE
     X_train_reshaped = X_train.reshape(X_train.shape[0], -1)
- 
-    X_resampled, y_resampled = adasyn.fit_resample(X_train_reshaped, y_train)
- 
+    
+    # Terapkan SMOTE untuk oversampling kelas 1
+    X_resampled, y_resampled = smote.fit_resample(X_train_reshaped, y_train)
+    
+    # Kembalikan data ke bentuk 3D seperti aslinya
     X_resampled = X_resampled.reshape(-1, X_train.shape[1], X_train.shape[2])
-
-    print(f"Distribusi kelas setelah ADASYN: {Counter(y_resampled)}")
+    
+    # Melihat distribusi kelas setelah SMOTE
+    print(f"Distribusi kelas setelah SMOTE: {Counter(y_resampled)}")
     
     return X_resampled, y_resampled
 
@@ -67,7 +93,7 @@ def data_generator_np(training_files, subject_files, batch_size):
         except Exception as e:
             print(f"Error processing file {np_file}: {e}")
 
-    X_resampled, y_resampled = apply_adasyn_1_2(X_train, y_train)
+    X_resampled, y_resampled = apply_smote_1_2(X_train, y_train)
 
     unique, counts = np.unique(y_resampled, return_counts=True)
     data_count = list(counts)  # Convert counts to a list

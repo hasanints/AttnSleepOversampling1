@@ -1,5 +1,5 @@
 {
-    "name": "sleep_edf78_apply_adasyn_1_2_exp1",
+    "name": "sleep_edf78_apply_smote_1_2_exp1",
     "n_gpu": 4,
 
     "arch": {
