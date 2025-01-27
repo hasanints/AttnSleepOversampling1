@@ -57,7 +57,7 @@ def apply_smote_1_2(X_train, y_train):
     
     # Menentukan kelas yang ingin dioversample (kelas 1) dengan perbandingan 1:2 terhadap kelas 2
     class_2_count = class_counts[2]
-    sampling_strategy = {1: class_2_count // 2}  # Kelas 1 akan dioversample hingga setengah jumlah kelas 2
+    sampling_strategy = {3: class_2_count // 2}  # Kelas 1 akan dioversample hingga setengah jumlah kelas 2
     
     # Inisialisasi SMOTE
     smote = SMOTE(sampling_strategy=sampling_strategy, random_state=42)  # oversample kelas 1 menjadi setengah kelas 2
